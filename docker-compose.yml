@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    volumes:
+     - db-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: PowerProbe
+      POSTGRES_PASSWORD: Powerprobe@123
+      POSTGRES_DB: PowerProbe_db
+    ports:
+      - '5432:5432'
+    networks:
+      pp-network:
+        ipv4_address: 172.28.0.2
+
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/PowerProbe
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=PowerProbe://PowerProbe:123456@172.28.0.2:5432/PowerProbe_db
+    networks:
+      pp-network:
+       ipv4_address: 172.28.0.3
+
+networks:
+  pp-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16
+
+volumes:
+  db-data:
