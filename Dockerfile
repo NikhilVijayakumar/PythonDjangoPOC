@@ -6,7 +6,8 @@ ENV PYTHONUNBUFFERED 1
 COPY ./app /app
 WORKDIR /app
 
-COPY requirements.txt /tmp/requirements.txt
+COPY ./requirements.txt /tmp/requirements.txt
+COPY ./requirements.dev.txt /tmp/requirements.dev.txt
 
 EXPOSE 8000
 ARG DEV=false

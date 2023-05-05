@@ -1,4 +1,4 @@
-version: '3.9'
+version: '3.3'
 
 services:
   db:
@@ -18,9 +18,12 @@ services:
   app:
     build:
       context: .
-    command: python manage.py runserver 0.0.0.0:8000
+      args:
+        - DEV=true
+    command: >
+        sh - c python manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/app
+      - ./app:/app
     ports:
       - "8000:8000"
     depends_on:
