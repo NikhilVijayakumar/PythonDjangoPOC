@@ -3,12 +3,13 @@ version: '3.3'
 services:
   db:
     image: postgres
+    container_name: db
     volumes:
      - db-data:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: apps
+      POSTGRES_USER: PowerProbe
       POSTGRES_PASSWORD: Powerprobe@123
-      POSTGRES_DB: PowerProbe_db
+      POSTGRES_DB: PowerProbeDb
     ports:
       - '5432:5432'
     networks:
@@ -16,6 +17,7 @@ services:
         ipv4_address: 172.28.0.2
 
   app:
+    container_name: app
     build:
       context: .
       args:
@@ -28,7 +30,11 @@ services:
     depends_on:
       - db
     environment:
-      - DATABASE_URL=apps://apps:123456@172.28.0.2:5432/PowerProbe_db
+      - DB_HOST = db
+      - DB_NAME = PowerProbeDb
+      - DB_USER = PowerProbe
+      - DB_PASSWORD = Powerprobe@123
+
     networks:
       pp-network:
        ipv4_address: 172.28.0.3
