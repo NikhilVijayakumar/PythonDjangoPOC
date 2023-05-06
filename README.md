@@ -1,4 +1,4 @@
-# PowerProbe Middleware
+# Python Django POC
 
 
 
