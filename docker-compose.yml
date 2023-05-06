@@ -6,7 +6,7 @@ services:
     volumes:
      - db-data:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: app
+      POSTGRES_USER: apps
       POSTGRES_PASSWORD: Powerprobe@123
       POSTGRES_DB: PowerProbe_db
     ports:
@@ -23,13 +23,13 @@ services:
     command: >
         sh - c python manage.py runserver 0.0.0.0:8000
     volumes:
-      - ./app:/app
+      - ./apps:/apps
     ports:
       - "8000:8000"
     depends_on:
       - db
     environment:
-      - DATABASE_URL=app://app:123456@172.28.0.2:5432/PowerProbe_db
+      - DATABASE_URL=apps://apps:123456@172.28.0.2:5432/PowerProbe_db
     networks:
       pp-network:
        ipv4_address: 172.28.0.3
