@@ -8,7 +8,7 @@ services:
      - db-data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: PowerProbe
-      POSTGRES_PASSWORD: Powerprobe@123
+      POSTGRES_PASSWORD: Powerprobe_123
       POSTGRES_DB: PowerProbeDb
     ports:
       - '5432:5432'
@@ -22,7 +22,11 @@ services:
       context: .
       args:
         - DEV=true
-    command: python manage.py runserver 0.0.0.0:8000
+    command: >
+      sh -c "python manage.py wait_for_db && 
+       python manage.py makemigrations &&
+      python manage.py migrate &&
+      python manage.py runserver 0.0.0.0:8000"
     volumes:
       - ./apps:/apps
     ports:
@@ -30,10 +34,11 @@ services:
     depends_on:
       - db
     environment:
-      - DB_HOST = db
+      - DB_HOST = 172.28.0.2
       - DB_NAME = PowerProbeDb
       - DB_USER = PowerProbe
-      - DB_PASSWORD = Powerprobe@123
+      - DB_PASSWORD = Powerprobe_123
+      #- DATABASE_URL=PowerProbe://PowerProbe:Powerprobe_123@172.28.0.2:5432/PowerProbeDb
 
     networks:
       pp-network:
