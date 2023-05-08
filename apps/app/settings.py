@@ -135,7 +135,7 @@ REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
-#AUTH_USER_MODEL = 'core.User'
+AUTH_USER_MODEL = 'core.User'
 
 
 SPECTACULAR_SETTINGS = {
